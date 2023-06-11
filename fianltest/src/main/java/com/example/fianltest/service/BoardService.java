@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public interface BoardService {
     BoardResponseDto saveBoard(BoardDto boardDto);
-    void deleteBoard(Long number) throws Exception;
-    BoardResponseDto changeBoard(Long number, String title, String content) throws Exception;
+    void deleteBoard(Long number, String name) throws Exception;
+    BoardResponseDto changeBoard(Long number, String title, String content, String name) throws Exception;
 
     List<BoardResponseDto> getBoardAll();
 

@@ -1,6 +1,7 @@
 package com.example.fianltest.dao.impl;
 
 import com.example.fianltest.dao.ProductDAO;
+import com.example.fianltest.dto.ProductDto;
 import com.example.fianltest.entity.Product;
 import com.example.fianltest.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,15 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public Product updateProductName(Long number, String name) throws Exception {
-        Optional<Product> selectedProduct = productRepository.findById(number);
+    public Product updateProductName(Product product) throws Exception {
+        Optional<Product> selectedProduct = productRepository.findById(product.getNumber());
         Product updateProduct;
         if(selectedProduct.isPresent()) {
-            Product product = selectedProduct.get();
-            product.setName(name);
+            Product change= selectedProduct.get();
+            product.setName(change.getName());
+            product.setPrice(change.getPrice());
+            product.setStock(change.getStock());
+            product.setCreatedAt(LocalDateTime.now());
             product.setUpdatedAt(LocalDateTime.now());
             updateProduct = productRepository.save(product);
         } else {
@@ -72,5 +76,10 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public Product ProductByNumber(int number) {
         return productRepository.findProductByNumber(number);
+    }
+
+    @Override
+    public Product ProductByName(String name) {
+        return productRepository.findProductByName(name);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.fianltest.dao;
 
+import com.example.fianltest.dto.ProductDto;
 import com.example.fianltest.entity.Product;
 
 import java.util.Collection;
@@ -13,9 +14,11 @@ public interface ProductDAO {
     void deleteProduct(Long number) throws Exception;
 
     List<Product> listProductAll();
-    Product updateProductName(Long number, String name) throws Exception;
+    Product updateProductName(Product product) throws Exception;
 
     List<Product> listProductByPriceAsc();
 
     Product ProductByNumber(int number);
+
+    Product ProductByName(String name);
 }

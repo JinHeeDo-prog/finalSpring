@@ -3,6 +3,7 @@ package com.example.fianltest.controller;
 import com.example.fianltest.dto.ChangeProductDto;
 import com.example.fianltest.dto.ProductDto;
 import com.example.fianltest.dto.ProductResponseDto;
+import com.example.fianltest.entity.Product;
 import com.example.fianltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,8 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<ProductResponseDto> changeProductName(@RequestBody ChangeProductDto changeProductDto) throws Exception{
-        ProductResponseDto productResponseDto = productService.changeProductName(changeProductDto.getNumber(), changeProductDto.getName());
+    public ResponseEntity<ProductResponseDto> changeProductName(@RequestBody ProductDto productDto) throws Exception{
+        ProductResponseDto productResponseDto = productService.changeProductName(productDto);
         return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
 
     }

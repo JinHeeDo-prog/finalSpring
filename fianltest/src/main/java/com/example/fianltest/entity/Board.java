@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
+
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +20,34 @@ public class Board {
 
     @Column(nullable = false)
     private String title;
+
+    public long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getName() {
+        return userName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
     @Column(nullable = false)
     private String contents;

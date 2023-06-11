@@ -1,6 +1,8 @@
 package com.example.fianltest.controller;
 
+import com.example.fianltest.dao.ProductDAO;
 import com.example.fianltest.dto.*;
+import com.example.fianltest.entity.Product;
 import com.example.fianltest.service.OrderService;
 import com.example.fianltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -15,17 +18,18 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
     private final ProductService productService;
+    private final ProductDAO productDAO;
 
     @Autowired
-    public OrderController(OrderService orderService, ProductService productService) {
+    public OrderController(OrderService orderService, ProductService productService, ProductDAO productDAO) {
         this.orderService = orderService;
         this.productService = productService;
+        this.productDAO = productDAO;
     }
 
     @PostMapping()
-    public ResponseEntity<OrderResponseDto> createBoard(@RequestBody OrderDto orderDto){
-        OrderResponseDto orderResponseDto = orderService.saveOrder(orderDto);
-
+    public ResponseEntity<OrderResponseDto> createBoard(String name , int stock) throws Exception {
+        OrderResponseDto orderResponseDto = orderService.getProductOrderById(stock);
         return ResponseEntity.status(HttpStatus.OK).body(orderResponseDto);
     }
 

@@ -22,6 +22,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductResponseDto getProductByName2(String name) {
+
+        Product changeProduct = productDAO.ProductByName(name);
+
+        ProductResponseDto productResponseDto = new ProductResponseDto();
+        productResponseDto.setName(changeProduct.getName());
+        productResponseDto.setPrice(changeProduct.getPrice());
+        productResponseDto.setNumber(changeProduct.getNumber());
+        productResponseDto.setStock(changeProduct.getStock()-1);
+        return productResponseDto;
+    }
+
+    @Override
     public ProductResponseDto saveProduct(ProductDto productDto) {
         Product product = new Product();
         product.setName(productDto.getName());
@@ -56,10 +69,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDto changeProductName(Long number, String name) throws Exception {
-        Product changeProduct = productDAO.updateProductName(number, name);
+    public ProductResponseDto changeProductName(ProductDto productDto) throws Exception {
+        Product product = new Product();
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setStock(productDto.getStock());
+
+        Product saveProduct = productDAO.insertProduct(product);
 
         ProductResponseDto productResponseDto = new ProductResponseDto();
+
+        productResponseDto.setName(saveProduct.getName());
+        productResponseDto.setPrice(saveProduct.getPrice());
+        productResponseDto.setStock(saveProduct.getStock());
+
+
         return productResponseDto;
 
     }

@@ -2,7 +2,6 @@ package com.example.fianltest.dao.impl;
 
 import com.example.fianltest.dao.BoardDAO;
 import com.example.fianltest.entity.Board;
-import com.example.fianltest.entity.Product;
 import com.example.fianltest.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,18 +26,24 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public void deleteProduct(Long number) throws Exception {
+    public void deleteProduct(Long number, String name) throws Exception {
         Optional<Board> selectBoard = boardRepository.findById(number);
+
 
         // delete
         if (selectBoard.isPresent()) {
             Board board = selectBoard.get();
-            boardRepository.delete(board);
+            if(board.getName().equals(name)) {
+                boardRepository.delete(board);
+            }
+            else {
+                Exception ex = new Exception("이름과 아이디가 같아야 합니다");
+            }
         } else throw new Exception();
     }
 
     @Override
-    public Board updateBoard(Long number, String title, String content) throws Exception {
+    public Board updateBoard(Long number, String title, String content, String name) throws Exception {
         Optional<Board> selectedBoard = boardRepository.findById(number);
         Board updateBoard;
         if(selectedBoard.isPresent()) {
@@ -46,6 +51,7 @@ public class BoardDAOImpl implements BoardDAO {
             board.setTitle(title);
             board.setContents(content);
             board.setUpdatedAt(LocalDateTime.now());
+            board.setUserName(name);
             updateBoard = boardRepository.save(board);
         } else {
             throw new Exception();

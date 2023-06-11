@@ -3,13 +3,12 @@ package com.example.fianltest.dao;
 import com.example.fianltest.entity.Board;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BoardDAO {
     Board insertBoard(Board board);
-    void deleteProduct(Long number) throws Exception;
+    void deleteProduct(Long number, String name) throws Exception;
 
-    Board updateBoard(Long number, String title, String content) throws Exception;
+    Board updateBoard(Long number, String title, String content, String name) throws Exception;
 
     List<Board> listBoardAll();
 

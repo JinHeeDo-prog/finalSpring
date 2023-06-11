@@ -30,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
         board.setTitle(boardDto.getTitle());
         board.setContents(boardDto.getContents());
         board.setUserId(boardDto.getUserId());
-        board.setUserName(boardDto.getUserName());
+        board.setUserName(boardDto.getName());
 
         Board saveBoard = boardDAO.insertBoard(board);
 
@@ -39,7 +39,7 @@ public class BoardServiceImpl implements BoardService {
         BoardResponseDto boardResponseDto = new BoardResponseDto();
 
         boardResponseDto.setUserId(saveBoard.getUserId());
-        boardResponseDto.setUserName(saveBoard.getUserName());
+        boardResponseDto.setUserName(saveBoard.getName());
         boardResponseDto.setContents(saveBoard.getContents());
         boardResponseDto.setTitle(saveBoard.getTitle());
 
@@ -47,15 +47,19 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void deleteBoard(Long number) throws Exception {
-        boardDAO.deleteProduct(number);
+    public void deleteBoard(Long number, String name) throws Exception {
+        boardDAO.deleteProduct(number,name);
     }
 
     @Override
-    public BoardResponseDto changeBoard(Long number, String title, String content) throws Exception {
-        Board changeBoard = boardDAO.updateBoard(number, title, content);
+    public BoardResponseDto changeBoard(Long number, String title, String content,String name) throws Exception {
+        Board changeBoard = boardDAO.updateBoard(number, title, content, name);
 
         BoardResponseDto boardResponseDto = new BoardResponseDto();
+        boardResponseDto.setUserName(changeBoard.getName());
+        boardResponseDto.setContents(changeBoard.getContents());
+        boardResponseDto.setUserId(changeBoard.getUserId());
+        boardResponseDto.setTitle(changeBoard.getTitle());
         return boardResponseDto;
     }
 
@@ -88,7 +92,7 @@ public class BoardServiceImpl implements BoardService {
 
         BoardResponseDto boardResponseDto = new BoardResponseDto();
         boardResponseDto.setUserId(board.getUserId());
-        boardResponseDto.setUserName(board.getUserName());
+        boardResponseDto.setUserName(board.getName());
         boardResponseDto.setTitle(board.getTitle());
         boardResponseDto.setContents(board.getContents());
 
